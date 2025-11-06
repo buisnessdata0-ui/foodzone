@@ -17,7 +17,7 @@ jobs:
       - name: Install JDK 17
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-openjdk-amd64
+          sudo apt-get install -y openjdk-17-jdk
           echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
           echo "/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_PATH
           java -version
@@ -40,9 +40,7 @@ jobs:
           cp app/build/outputs/apk/debug/*.apk output/ || echo "No APK found"
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@5d4d0a6775bc6211b9f742507133536ebc0c12b3
         with:
           name: FoodZone-APK
-  
-
-
+          path: output/*.apk
