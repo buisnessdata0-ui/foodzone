@@ -29,10 +29,14 @@ jobs:
           echo "$(pwd)/gradle-8.2.1/bin" >> $GITHUB_PATH
 
       - name: Grant execute permission
-        run: chmod +x 
+        run: chmod +x ./gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Collect APK output
         run: |
           mkdir output
           cp app/build/outputs/apk/debug/*.apk output/ || echo "No APK found"
+
 
