@@ -12,7 +12,8 @@ jobs:
       
 
       - name: Set up JDK 17
-        uses: actions/setup-java@2c7c9183e5ef312b0be915a7c033622024d2ae62
+        uses: actions/setup-java@3df4d9c1442869ce5c33ec8838ae0a533cf06f8e
+
 
         with:
           java-version: '17'
