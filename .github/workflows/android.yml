@@ -8,7 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8ade135a1f73f3f0ae66515c18ba1ecfe581616c
+      -uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      
 
       - name: Set up JDK 17
         uses: actions/setup-java@99bb5d117f3e1ccf1c2e99fdc899c1e87554846d
