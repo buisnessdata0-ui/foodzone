@@ -1,6 +1,4 @@
-
   name: Build FoodZone APK
-
 on:
   push:
     branches:
@@ -42,4 +40,5 @@ jobs:
         with:
           name: output
           path: output/*.apk
+
         
