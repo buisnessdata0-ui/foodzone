@@ -1,10 +1,15 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.foodzone.app">
-<application android:label="FoodZone" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-<activity android:name=".ui.CartActivity"/>
-<activity android:name=".ui.ProductListActivity"/>
-<activity android:name=".ui.HomeActivity"/>
-<activity android:name=".ui.OtpActivity"/>
-<activity android:name=".ui.LoginActivity">
-<intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
-</activity>
-</application></manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.foodzone.app">
+
+    <application
+        android:label="FoodZone"
+        android:icon="@mipmap/ic_launcher">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

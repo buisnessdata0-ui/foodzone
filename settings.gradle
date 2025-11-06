@@ -1,8 +1,2 @@
-pluginManagement {
-  repositories {
-    google()
-    mavenCentral()
-  }
-}
-
-include ":app"
+include(':app')
+project(':app').projectDir = new File(rootDir, 'app')
