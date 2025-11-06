@@ -2,31 +2,34 @@ name: Build FoodZone APK
 
 on:
   push:
-    branches:
-      - master
-  workflow_dispatch:
+    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@b4f14bebcd5a3e7cb112bc70acb5d7b8b7b3b3c6
+      - name: Checkout code manually
+        run: |
+          git clone https://github.com/buisnessdata0-ui/foodzone.git repo
+          cp -r repo/* .
 
       - name: Install JDK 17
-        uses: actions/setup-java@0ab944b53a6b0f2e6f6f55e403f3f6c095f40f4e
-        with:
-          distribution: temurin
-          java-version: 17
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk
+          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+          echo "/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_PATH
+          java -version
 
-      - name: Install Gradle 8.2.1
-        uses: gradle/gradle-build-action@3a8c6ba2d1c5966e4f3fa578fc7fcacff72d33f0
-        with:
-          gradle-version: 8.2.1
+      - name: Install Gradle 8.2.1 (required by AGP 8.0.2)
+        run: |
+          wget https://services.gradle.org/distributions/gradle-8.2.1-bin.zip -O gradle.zip
+          unzip gradle.zip
+          echo "$(pwd)/gradle-8.2.1/bin" >> $GITHUB_PATH
 
       - name: Grant execute permission
-        run: chmod +x gradlew
+        run: chmod +x gradlew || true
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
@@ -35,11 +38,4 @@ jobs:
         run: |
           mkdir output
           cp app/build/outputs/apk/debug/*.apk output/ || echo "No APK found"
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@a8cdbeed9ecb8f5a2b8c1f46129f0e58eb9e6bb0
-        with:
-          name: output
-          path: output/*.apk
-          
 
