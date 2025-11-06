@@ -9,13 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code manually (no GitHub Action)
+      - name: Checkout code manually
         run: |
           git clone https://github.com/buisnessdata0-ui/foodzone.git repo
-          cd repo
-          cp -r . ../
-
-      - name: Install JDK 17 (apt)
+          cp -r repo/* .
+      
+      - name: Install JDK 17
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-17-jdk
@@ -23,18 +22,19 @@ jobs:
           echo "/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_PATH
           java -version
 
+      - name: Install Gradle 8.2.1 (required by AGP 8.0.2)
+        run: |
+          wget https://services.gradle.org/distributions/gradle-8.2.1-bin.zip -O gradle.zip
+          unzip gradle.zip
+          echo "$(pwd)/gradle-8.2.1/bin" >> $GITHUB_PATH
+
       - name: Grant execute permission
-        run: chmod +x gradlew
+        run: chmod +x gradlew || true
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Build debug APK
+        run: gradle assembleDebug
 
-      - name: Upload APK manually (no upload-artifact)
+      - name: Collect APK output
         run: |
           mkdir output
-          cp app/build/outputs/apk/debug/*.apk output/
-        continue-on-error: true
-
-
-
-
+          cp app/build/outputs/apk/debug/*.apk output/ || echo "No APK found"
