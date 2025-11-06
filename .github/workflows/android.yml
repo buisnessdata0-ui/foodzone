@@ -11,33 +11,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ✅ Checkout code (VALID SHA)
       - name: Checkout code
-        uses: actions/checkout@b4ffde62b43d142ba7d0d6d0ccf7d1a3e6e1c3b5
+        uses: actions/checkout@d632684ac423f52f3616b99ce0a55f9f9d482b6f
 
+      # ✅ Install JDK 17 (VALID SHA)
       - name: Install JDK 17
-        uses: actions/setup-java@2d928f448b78c1888c31cebbbedb36bb3e207a06
+        uses: actions/setup-java@cd89f42fb0a66f60f9aff0e8f7e8c139ff9e8cf4
         with:
           distribution: temurin
           java-version: 17
 
+      # ✅ Install Gradle (VALID SHA)
       - name: Install Gradle 8.2.1
         uses: gradle/gradle-build-action@3d57bdc647b36bdb5f59ef078d78e071bd9dbd54
         with:
           gradle-version: 8.2.1
 
+      # ✅ Permission
       - name: Grant execute permission
         run: chmod +x gradlew
 
+      # ✅ Build APK
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
+      # ✅ Collect APK
       - name: Collect APK output
         run: |
           mkdir output
           cp app/build/outputs/apk/debug/*.apk output/ || echo "No APK found"
 
+      # ✅ Upload APK Artifact (VALID SHA)
       - name: Upload APK artifact
         uses: actions/upload-artifact@0a9279bf294aabd012a432f5db03b760174a7f2e
         with:
           name: output
           path: output/*.apk
+
