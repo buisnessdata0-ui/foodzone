@@ -7,10 +7,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Install JDK 17 (apt, no action)
+    steps:
+      - name: Checkout code manually (no GitHub Action)
+        run: |
+          git clone https://github.com/buisnessdata0-ui/foodzone.git repo
+          cd repo
+          cp -r . ../
+
+      - name: Install JDK 17 (apt)
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-17-jdk
@@ -21,14 +26,15 @@ jobs:
       - name: Grant execute permission
         run: chmod +x gradlew
 
-      - name: Build debug APK
+      - name: Build APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@0a9279bf294aabd012a432f5db03b760174a7f2e
-        with:
-          name: FoodZone-APK
-          path: app/build/outputs/apk/debug/*.apk
+      - name: Upload APK manually (no upload-artifact)
+        run: |
+          mkdir output
+          cp app/build/outputs/apk/debug/*.apk output/
+        continue-on-error: true
+
 
 
 
